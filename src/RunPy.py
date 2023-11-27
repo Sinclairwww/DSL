@@ -74,7 +74,7 @@ class RunPy:
         if not func:
             logger.fatal(f'Invalid Script Name {funcName}')
             raise RuntimeError(f'Invalid Script Name {funcName}')
-        argspec = inspect.getargspec(func)
+        argspec = inspect.getfullargspec(func)
         maxArgs = len(argspec.args)
         minArgs = len(argspec.args) - len(argspec.defaults) if argspec.defaults else 0
         if len(args) < minArgs:

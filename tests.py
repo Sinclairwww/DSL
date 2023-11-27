@@ -10,16 +10,16 @@ goodconf.load('./src/data/default_config.yaml')
 
 
 class ConfigLoaderTest(unittest.TestCase):
-    '''
+    """
     测试ConfigLoader是否能够正确加载配置并校验配置是否合法
-    '''
+    """
     def test_parse_job2(self):
         conf = ConfigLoader()
         conf.load('./config.yaml')
         lexer = Lexer(conf)
         lexer.load('./jobs/example.job')
         parser = Parser(conf, lexer)
-        with open('./jobs/example.job', 'r') as f:
+        with open('./jobs/example.job', 'r', encoding='utf-8') as f:
             p = parser.parseStr(f.read())
             p.print()
 

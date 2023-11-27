@@ -13,6 +13,7 @@ runpy = RunPy.getInstance()
 
 class Interpreter:
     def __init__(self, configLoader: ConfigLoader):
+        self.runtime = None
         self._lexer = Lexer(configLoader)
         self._parser = Parser(configLoader, self._lexer)
         self._config = configLoader
@@ -29,6 +30,7 @@ class Interpreter:
         """
         接受一个Runtime对象，并开始从Main step运行脚本
 
+        :param runtime: 
         :param runtime Runtime: 
         """
         self._stop = False
@@ -133,7 +135,7 @@ class Interpreter:
             self.runtime.assign(str(i), args[i])
 
     def _load_job(self):
-        with open(self._config.getJobConfig().get('path'), 'r') as f:
+        with open(self._config.getJobConfig().get('path'), 'r', encoding='utf-8') as f:
             self.job = f.read()
         self._lexer.load_str(self.job)
 

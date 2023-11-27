@@ -17,9 +17,10 @@ def select_rand_number():
     conn.close()
     return number
 
+
 def welcome():
     print(
-r"""
+        r"""
  ____       _           _   ____  _     
 |  _ \ ___ | |__   ___ | |_/ ___|| |    
 | |_) / _ \| '_ \ / _ \| __\___ \| |    
@@ -29,6 +30,7 @@ r"""
 """)
     str = input("按回车从数据库中抽取一位随机用户模拟通话:")
     return str != '退出'
+
 
 if __name__ == '__main__':
     conf = ConfigLoader('./config.yaml')
