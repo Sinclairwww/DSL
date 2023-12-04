@@ -38,7 +38,6 @@ class Interpreter:
             if self.ast:
                 self.ast.print()
             raise RuntimeError("Must call setRuntime and load_job before Run")
-        logger.info("Begin running...")
         if "Main" not in self.steps:
             raise RuntimeError("Entry step Main not defined")
         self._runStep(self.steps["Main"])
@@ -98,18 +97,19 @@ class Interpreter:
     def _exec_switch(self, expr: ASTNode):
         # 获取switch语句的条件
         condition = self.runtime.getvar(expr.type[2])
-        # 获取switch语句的case列表
+        # 获取job中switch语句的case列表
         cases = [child.type[1] for child in expr.childs if child.type[0] == "case"]
-        # 检查 expr.childs 的最后一个子节点是否是 "default" 类型
+        # 检查有没有写default
         default = expr.childs[-1] if expr.childs[-1].type[0] == "default" else None
         match = -1
+        # 遍历case列表，如果找到了与条件匹配的case，就将这个case的索引赋值给match，然后跳出循环。
         for i in range(len(cases)):
             if condition == cases[i]:
                 match = i
                 break
-        if match == -1 and default:
+        if match == -1 and default:  # 代表没有找到匹配的case，但是有default,执行default
             return self._exec(default.childs[0])
-        elif match != -1:
+        elif match != -1:  # 代表找到了匹配的case,执行该case的第一个子节点
             return self._exec(expr.childs[match].childs[0])
 
     def _eval(self, term: ASTNode):
@@ -119,8 +119,10 @@ class Interpreter:
             case "str":
                 return term.type[1]
             case "terms":
+                # 递归调用_eval，将所有子节点的值拼接起来
                 return reduce(lambda x, y: x + self._eval(y), term.childs, "")
             case "va_args":
+                # 递归调用_eval，将所有子节点的值放入列表中
                 return [self._eval(x) for x in term.childs]
             case _:
                 raise RuntimeError("eval an unknown ASTNode")

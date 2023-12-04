@@ -29,13 +29,16 @@ class RunPy:
         if self._configLoader:
             return
         self._configLoader = configLoader
+        # 获取脚本目录列表
         dirs = self._getConfig().get("dirs")
+        # 遍历目录列表，获取所有脚本文件
         for dir in dirs:
             self._getFiles(dir)
+        # 将所有脚本文件导入
         for file in self._fileList:
-            spec = importlib.util.spec_from_file_location("script", file)
-            foo = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(foo)
+            spec = importlib.util.spec_from_file_location("script", file)  # 从文件加载模块
+            foo = importlib.util.module_from_spec(spec)  # 创建一个模块对象
+            spec.loader.exec_module(foo)  # 执行加载模块
 
     # 为全局RunPy实例注册脚本函数的装饰器
     def register(self, name):
@@ -103,6 +106,7 @@ class RunPy:
         return self._configLoader.getScriptsConfig()
 
     def _getFiles(self, path):
+        # 遍历指定目录下的所有文件，将所有以.py结尾的文件加入到文件列表中
         for dirpath, _, filenames in os.walk(path):
             for name in filenames:
                 if name[-3:] != ".py":

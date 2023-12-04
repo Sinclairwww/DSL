@@ -85,12 +85,14 @@ class Runtime:
         return self._variables[varname]
 
     def _extractKeywords(self, str):
+        # 从用户输入中提取关键词
         for key in self.KEYWORDS:
             if key in str:
                 self._variables["_input_keyword"] = key
                 break
 
     def _extractNumbers(self, str):
+        # 从用户输入中提取数字
         match = re.findall(r"\d+", str)
         if match:
             self.assign("_input_number", match[0])

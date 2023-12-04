@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cf342a49-c69c-4e99-b5ab-348f5e5e2b8d" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/random_users.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/random_users.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ConfigLoader.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ConfigLoader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Interpreter.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Interpreter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RunPy.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/RunPy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ply/Lexer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ply/Lexer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ply/Parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ply/Parser.py" afterDir="false" />
-    </list>
+    <list default="true" id="cf342a49-c69c-4e99-b5ab-348f5e5e2b8d" name="更改" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
