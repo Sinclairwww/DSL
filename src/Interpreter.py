@@ -26,13 +26,8 @@ class Interpreter:
         self._load_job()
         self._parse()
 
+    # 接受一个Runtime对象，并开始从Main step运行脚本
     def accept(self, runtime: Runtime):
-        """
-        接受一个Runtime对象，并开始从Main step运行脚本
-
-        :param runtime:
-        :param runtime Runtime:
-        """
         self._stop = False
         self.runtime = runtime
         self.run()
@@ -49,10 +44,6 @@ class Interpreter:
         self._runStep(self.steps["Main"])
 
     def stop(self):
-        """
-        停止运行脚本
-
-        """
         logger.debug("Requesting to stop...")
         self._stop = True
 
@@ -75,17 +66,23 @@ class Interpreter:
         match expr.type[1]:
             case "call":
                 self._runStep(
-                    self._getStep(expr.childs[0].type[1]), *self._eval(expr.childs[1])
+                    # param：step名称，参数列表
+                    self._getStep(expr.childs[0].type[1]),
+                    *self._eval(expr.childs[1]),
                 )
             case "assign":
+                # param：变量名，变量值
                 self.runtime.assign(expr.type[2], self._eval(expr.childs[0]))
             case "speak":
+                # param：要说的话
                 self.runtime.speak(self._eval(expr.childs[0]))
             case "callpy":
+                # param：函数名，参数列表
                 self._callpy(expr.childs[0].type[1], *self._eval(expr.childs[1]))
             case "beep":
                 self.runtime.beep()
             case "wait":
+                # param：等待时间
                 self.runtime.wait(self._eval(expr.childs[0]))
             case "hangup":
                 self.stop()
@@ -97,9 +94,13 @@ class Interpreter:
         ret = runpy.callFunc(funcName, *args)
         self.runtime.assign("_ret", ret)
 
+    # 执行switch语句
     def _exec_switch(self, expr: ASTNode):
+        # 获取switch语句的条件
         condition = self.runtime.getvar(expr.type[2])
+        # 获取switch语句的case列表
         cases = [child.type[1] for child in expr.childs if child.type[0] == "case"]
+        # 检查 expr.childs 的最后一个子节点是否是 "default" 类型
         default = expr.childs[-1] if expr.childs[-1].type[0] == "default" else None
         match = -1
         for i in range(len(cases)):
@@ -134,9 +135,11 @@ class Interpreter:
         self._lexer.load_str(self.job)
 
     def _parse(self):
-        logger.info("Begin parsing job file...")
         if self.job == "":
             raise RuntimeError("job is empty")
+        # 解析字符串，生成抽象语法树
         self.ast = self._parser.parseStr(self.job)
         for stepdecl in self.ast.childs:
+            # 将抽象语法树中的step声明转换为字典
+            # key为step的名称，value为step的ASTNode
             self.steps[stepdecl.type[1]] = stepdecl
