@@ -34,10 +34,6 @@ class Interpreter:
 
     # 开始运行脚本
     def run(self):
-        if not self.runtime or not self.ast:
-            if self.ast:
-                self.ast.print()
-            raise RuntimeError("Must call setRuntime and load_job before Run")
         if "Main" not in self.steps:
             raise RuntimeError("Entry step Main not defined")
         self._runStep(self.steps["Main"])
@@ -112,12 +108,13 @@ class Interpreter:
         elif match != -1:  # 代表找到了匹配的case,执行该case的第一个子节点
             return self._exec(expr.childs[match].childs[0])
 
+    # 计算表达式的值
     def _eval(self, term: ASTNode):
         match term.type[0]:
             case "var":
                 return self.runtime.getvar(term.type[1])
             case "str":
-                return term.type[1]
+                return term.type[1]  # 返回字符串
             case "terms":
                 # 递归调用_eval，将所有子节点的值拼接起来
                 return reduce(lambda x, y: x + self._eval(y), term.childs, "")
