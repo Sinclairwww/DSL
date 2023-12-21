@@ -65,8 +65,6 @@ class Lexer:
 
     # 获取下一个词法符号
     def token(self):
-        if not self._f:
-            raise RuntimeError("Load file before get token")
         return self._lexer.token()
 
     def t_NEWLINE(self, t):
@@ -77,7 +75,7 @@ class Lexer:
     # 获取标识符
     def t_ID(self, t):
         r"[a-zA-Z_][a-zA-Z_0-9]*"
-        t.type = self.reserved.get(t.value, "ID")  # 查找与t.value相同的保留字,如果没有则返回ID
+        t.type = self.reserved.get(t.value, "ID")  # 查找与t.value相同的保留字,如果没有则默认返回ID
         return t
 
     def t_VAR(self, t):
@@ -96,13 +94,3 @@ class Lexer:
             raise RuntimeError(msg)
         logger.error(msg)
         t.lexer.skip(1)
-
-
-if __name__ == "__main__":
-    c = ConfigLoader("../data/default_config.yaml")
-    l = Lexer(c)
-    l.load_str("""step name endstep""")
-    token = l.token()
-    while token:
-        print(token)
-        token = l.token()
