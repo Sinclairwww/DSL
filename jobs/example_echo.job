@@ -6,7 +6,7 @@ endstep
 
 step Echo 
 	speak $1
-	wait '10'
+	wait '20'
 	switch $_input
 		case "再见" hangup
 		default call Echo $_input

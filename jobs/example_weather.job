@@ -2,7 +2,7 @@
 
 step Main
 	speak "我是一个天气机器人，你想查询哪里的天气"
-	wait "10"
+	wait "20"
 	call Weather $_input
 	speak "谢谢您的使用"
 	hangup

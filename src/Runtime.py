@@ -42,6 +42,7 @@ class Runtime:
             except TimeoutOccurred:
                 str = "timeout"
                 logger.info("输入超时.")
+                exit(0)
         else:
             str = input()
         self.assign("_input", str)
