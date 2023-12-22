@@ -63,7 +63,6 @@ class RunPy:
         如果调用前未注册该脚本，则会抛出RuntimeError
         :param funcName str: 要调用的脚本名称
         """
-        logger.info(f"Calling Python Script {funcName}")
         func = self._nameFuncMap.get(funcName, None)
 
         ret = func(*args)

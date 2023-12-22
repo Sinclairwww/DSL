@@ -35,7 +35,7 @@ class Runtime:
 
     # 等待用户输入, 如果时间超过timeStr，则超时
     def wait(self, timeStr):
-        self.speak(f"我将等待 {timeStr} 秒")
+        cprint(f"(等待{timeStr} 秒)\n", "blue")
         if self._enable_timeout:
             try:
                 str = inputimeout(prompt="Me: ", timeout=int(timeStr))
