@@ -16,7 +16,7 @@ def select_rand_number():
 
 
 def welcome():
-    str = input("按回车从数据库中抽取一位随机用户模拟通话:(输入quit退出)")
+    str = input("按回车开始模拟通话:(输入quit退出)")
     return str != "quit"
 
 

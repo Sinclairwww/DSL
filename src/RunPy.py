@@ -48,7 +48,6 @@ class RunPy:
                     f"Reregistering Script {name}, the old will be overwritten."
                 )
             self._nameFuncMap[name] = func
-            logger.info(f"Registered Script {name}")
 
             def wrapper2():
                 ret = func()
