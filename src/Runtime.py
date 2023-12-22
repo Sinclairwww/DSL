@@ -38,7 +38,7 @@ class Runtime:
         cprint(f"(等待{timeStr} 秒)\n", "blue")
         if self._enable_timeout:
             try:
-                str = inputimeout(prompt="Me: ", timeout=int(timeStr))
+                str = inputimeout(prompt="我: ", timeout=int(timeStr))
             except TimeoutOccurred:
                 str = "timeout"
                 logger.info("输入超时.")
