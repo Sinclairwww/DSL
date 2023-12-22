@@ -29,11 +29,11 @@ class RunPy:
         if self._configLoader:
             return
         self._configLoader = configLoader
-        # 获取脚本目录列表
-        dirs = self._getConfig().get("dirs")
-        # 遍历目录列表，获取所有脚本文件
-        for dir in dirs:
+
+        dirs = self._getConfig().get("dirs")  # 获取脚本目录列表
+        for dir in dirs:  # 遍历目录列表，获取所有脚本文件
             self._getFiles(dir)
+
         # 将所有脚本文件导入
         for file in self._fileList:
             spec = importlib.util.spec_from_file_location("script", file)  # 从文件加载模块
@@ -62,45 +62,13 @@ class RunPy:
         """
         调用名为funcName的已注册的脚本
         如果调用前未注册该脚本，则会抛出RuntimeError
-
         :param funcName str: 要调用的脚本名称
-        :raises RuntimeError: 未注册的调用
-        :raises RuntimeError: 传入的参数过少
-        :raises RuntimeError: 传入的参数过多
-        :raises Exception: 如果scripts配置了halt-onerror,那么脚本执行失败抛出该异常
         """
         logger.info(f"Calling Python Script {funcName}")
         func = self._nameFuncMap.get(funcName, None)
-        if not func:
-            logger.fatal(f"Invalid Script Name {funcName}")
-            raise RuntimeError(f"Invalid Script Name {funcName}")
-        argspec = inspect.getfullargspec(func)
-        maxArgs = len(argspec.args)
-        minArgs = len(argspec.args) - len(argspec.defaults) if argspec.defaults else 0
-        if len(args) < minArgs:
-            logger.error(
-                f"Not Enough Aruguments to Call {funcName}, expected minimum of {minArgs}, got{len(args)}"
-            )
-            raise RuntimeError(
-                f"Not Enough Aruguments to Call {funcName}, expected minimum of {minArgs}, got{len(args)}"
-            )
-        elif len(args) > maxArgs:
-            logger.error(
-                f"Too many Aruguments to Call {funcName}, expected maximum of {maxArgs}, got{len(args)}"
-            )
-            raise RuntimeError(
-                f"Too many Aruguments to Call {funcName}, expected maximum of {maxArgs}, got{len(args)}"
-            )
-        try:
-            ret = func(*args)
-            return ret
-        except Exception as e:
-            if self._getConfig()["halt-onerror"]:
-                raise e
-            else:
-                logger.warning(
-                    f"Ignoring Exception When calling py scripts {funcName}: {e}"
-                )
+
+        ret = func(*args)
+        return ret
 
     def _getConfig(self):
         return self._configLoader.getScriptsConfig()
