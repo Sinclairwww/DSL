@@ -50,36 +50,17 @@ class Runtime:
         self._extractNumbers(str)
 
     def hangup(self):
-        """
-        挂断连接，终止脚本
-
-        """
         logger.info(f"用户{self._variables.get('_number')}挂断电话")
 
     def assign(self, var, val):
-        """
-        为变量赋值
-
-        :param var str: 变量名
-        :param val Any: 要赋的值（会被转换为字符串）
-        """
         self._variables[var] = str(val)
         pass
 
     def beep(self):
-        """
-        实现发送滴声的方法（为电话客服设计）
-
-        """
         print("滴滴滴...")
         pass
 
     def getvar(self, varname):
-        """
-         获取变量的值
-
-        :param varname str: 变量名
-        """
         if varname not in self._variables:
             self._variables[varname] = ""
         return self._variables[varname]
