@@ -1,5 +1,4 @@
 from src import *
-import sys
 import logging
 import sqlite3
 

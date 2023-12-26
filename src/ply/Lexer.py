@@ -1,6 +1,6 @@
 from ply.lex import lex
 from logging import getLogger
-from .. import ConfigLoader
+
 
 logger = getLogger("Interpreter")
 
@@ -44,10 +44,8 @@ class Lexer:
     def getLexer(self):
         return self._lexer
 
+    # 载入脚本文件
     def load(self, path):
-        """
-        载入脚本文件
-        """
         self._f = None
         with open(path, "r", encoding="utf8") as f:
             self._f = f.read()
