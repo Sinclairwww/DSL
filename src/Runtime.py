@@ -50,7 +50,7 @@ class Runtime:
         self._extractNumbers(str)
 
     def hangup(self):
-        logger.info(f"用户{self._variables.get('_number')}挂断电话")
+        logger.info(f"用户{self._variables.get('_number')}挂断电话\n")
 
     def assign(self, var, val):
         self._variables[var] = str(val)

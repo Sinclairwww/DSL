@@ -39,7 +39,6 @@ class Interpreter:
         self._runStep(self.steps["Main"])
 
     def stop(self):
-        logger.debug("Requesting to stop...")
         self._stop = True
 
     def _getStep(self, stepname):
